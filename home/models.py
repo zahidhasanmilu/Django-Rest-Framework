@@ -9,7 +9,8 @@ from django.template.defaultfilters import slugify
 class Student(models.Model):
     name = models.CharField(max_length=50)
     age = models.IntegerField(default=18)
-    father_name = models.CharField(max_length=50)
+    department = models.ForeignKey(
+        'Department', on_delete=models.CASCADE, blank=True, null=True)
     gender = models.ForeignKey(
         'Gender', on_delete=models.CASCADE, blank=True, null=True)
     slug = AutoSlugField(populate_from='name', unique=True, blank=True,)
@@ -31,3 +32,10 @@ class Gender(models.Model):
 
     def __str__(self):
         return self.gender
+
+
+class Department(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
